@@ -1,0 +1,6 @@
+/*
+EXAMPLE FILE - TO BE UPDATED WITH PERSONAL DETAILS
+THIS PYTHON FILE TO BE RENAMED TO 'history.json' IN PRODUCTION
+*/
+
+{"<child_id>": ["<report_id>", "<report_id>", "<report_id>"]}

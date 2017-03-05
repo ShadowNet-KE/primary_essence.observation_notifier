@@ -1,5 +1,6 @@
 # Custom files
 creds.py
+history.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
