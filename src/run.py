@@ -1,4 +1,5 @@
 from time import sleep
+from datetime import datetime
 from primaryessence.get_data import get_learningJournal
 from primaryessence.session import create_session
 from primaryessence.parse_observations import find_observations
@@ -16,6 +17,8 @@ while True:
         o[child_id] = find_observations(s, r[child_id])
         #
         send_notifications_all(child_id, o[child_id])
+    #
+    print('Operation run at {time}'.format(time=datetime.now().strftime('%YYYY-%mm-%dd %HH:%MM:%ss')))
     #
     sleep(3600000) # hourly
     #

@@ -6,15 +6,14 @@ from email.mime.image import MIMEImage
 import creds
 from notification_history import check_history, add_history
 
-EML_TO = 'robe16@hotmail.co.uk'
-
 
 def send_notifications_all(child_id, objObs):
     #
     for objOb in objObs:
         if not check_history(child_id, objOb.id()):
-            email_observations(objOb)
-            add_history(child_id, objOb.id())
+            result = email_observations(objOb)
+            if result:
+                add_history(child_id, objOb.id())
 
 
 def email_observations(objOb):
@@ -30,7 +29,7 @@ def compile_email(objOb):
     image_name = 'img_{id}.jpg'.format(id=objOb.id())
     #
     msg = MIMEMultipart()
-    msg["To"] = EML_TO
+    msg["To"] = '; '.join(creds.EML_TO)
     msg["From"] = creds.USERNAME
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title())
     #
@@ -49,6 +48,6 @@ def send_email(msg):
     eml.starttls()
     eml.set_debuglevel(1)
     eml.login(creds.USERNAME, creds.PASSWORD)
-    eml.sendmail(creds.USERNAME, EML_TO, msg.as_string())
+    eml.sendmail(creds.USERNAME, creds.EML_TO, msg.as_string())
     eml.quit()
     return True
