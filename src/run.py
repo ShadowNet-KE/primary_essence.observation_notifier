@@ -18,7 +18,9 @@ while True:
         #
         send_notifications_all(child_id, o[child_id])
     #
+    print('****************************************************************')
     print('Operation run at {time}'.format(time=datetime.now().strftime('%YYYY-%mm-%dd %HH:%MM:%ss')))
+    print('****************************************************************')
     #
     sleep(3600000) # hourly
     #
