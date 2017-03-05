@@ -1,4 +1,4 @@
-import login_creds
+import creds
 
 
 def get_learningJournal(s):

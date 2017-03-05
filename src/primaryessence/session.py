@@ -1,4 +1,4 @@
-import login_creds
+import creds
 import requests
 import requests.cookies
 
