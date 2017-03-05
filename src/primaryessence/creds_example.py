@@ -5,4 +5,4 @@ PREFIX = 'beb'
 USERNAME = 'beb.forename.surname'
 PASSWORD = 'password'
 NURSERY = 'bridgeend-brighouse'
-CHILD_ID = '123456'
+CHILD_ID = ['123456']

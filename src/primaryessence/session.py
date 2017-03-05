@@ -1,11 +1,10 @@
-import creds
 import requests
 import requests.cookies
 
 
-def create_session():
+def create_session(nursery, prefix, username, password):
     #
-    url_login = 'https://www.primaryessence.co.uk/{nursery}'.format(nursery=login_creds.NURSERY)
+    url_login = 'https://www.primaryessence.co.uk/{nursery}'.format(nursery=nursery)
     url_login_post = 'https://www.primaryessence.co.uk/Login/General'
 
     with requests.Session() as s:
@@ -30,7 +29,7 @@ def create_session():
         #
         # Set the cookie for nursery
         new_cookie = {'name': 'PEEELoginUrl',
-                      'value': login_creds.NURSERY,
+                      'value': nursery,
                       'domain': 'www.primaryessence.co.uk',
                       'path': '/'}
         #
@@ -39,7 +38,7 @@ def create_session():
         ################################################################
         #
         r = s.post(url_login_post,
-                   files=(('prefix', (None, login_creds.PREFIX)), ('txtGeneralUsername', (None, login_creds.USERNAME)), ('txtGeneralPassword', (None, login_creds.PASSWORD))),
+                   files=(('prefix', (None, prefix)), ('txtGeneralUsername', (None, username)), ('txtGeneralPassword', (None, password))),
                    allow_redirects=False)
         #
         ################################################################

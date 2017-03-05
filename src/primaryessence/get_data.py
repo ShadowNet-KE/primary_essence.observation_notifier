@@ -1,9 +1,6 @@
-import creds
-
-
-def get_learningJournal(s):
+def get_learningJournal(s, child_id):
     #
-    url_learning_journal = 'https://www.primaryessence.co.uk/LearningJourney/GetLJ/{child_id}'.format(child_id=login_creds.CHILD_ID)
+    url_learning_journal = 'https://www.primaryessence.co.uk/LearningJourney/GetLJ/{child_id}'.format(child_id=child_id)
     #
     ################################################################
     #
