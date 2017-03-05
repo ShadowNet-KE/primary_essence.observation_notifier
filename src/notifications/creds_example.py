@@ -4,3 +4,5 @@
 SERVER = 'smtp-mail.outlook.com'
 USERNAME = 'another@emailserver.com'
 PASSWORD = 'password'
+
+EML_TO = ['recipient_one@emailserver.com', 'recipient_two@emailserver.com']
