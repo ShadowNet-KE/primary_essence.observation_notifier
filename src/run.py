@@ -6,9 +6,10 @@ from primaryessence.parse_observations import find_observations
 from primaryessence import creds
 from notifications.notify_email import send_notifications_all
 
-s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
 
 while True:
+    #
+    s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
     #
     r = {}
     o = {}
