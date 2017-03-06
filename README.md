@@ -1,15 +1,15 @@
 # primaryessence_update-checker
 
-Application to run and check on regular basis (TBD) for new observations on the primary essence website for child(ren).
+Application to run and check on regular basis (currently set to hourly) for new observations on the primary essence website for child(ren).
 
-To create notification module that will send email to specified email address(es) if new observation detected.
+A history of the observation IDs are maintained against each child ID in json format, and each scheduled run is checked against this list. Any new observations are emailed, along with the image embedded in the email, to the email addresses in the notifications.creds.py module.
 
 <hr>
 
 <h3>Required python packages</h3>
 <p>The following python packages require installation on the target system:
 <br>
-Beautiful Soup: <code>https://pypi.python.org/pypi/beautifulsoup4</code>
+requests: <code>http://docs.python-requests.org/en/master/</code>
 <br>
-email: <code>https://docs.python.org/2/library/email.html</code>
+Beautiful Soup: <code>https://pypi.python.org/pypi/beautifulsoup4</code>
 </p>
