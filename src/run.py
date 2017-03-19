@@ -23,5 +23,5 @@ while True:
     print('Operation run at {time}'.format(time=datetime.now().strftime('%Y-%m-%d %H:%M')))
     print('****************************************************************')
     #
-    sleep(3600000) # hourly
+    sleep(3600) # hourly
     #
