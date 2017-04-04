@@ -20,15 +20,16 @@ while True:
         send_notifications_all(child_id, o[child_id])
     #
     now = datetime.datetime.now()
-    nxt = now + datetime.timedelta(hours=1)
     #
     s = 7    # opening time of nursery in 24 hours
     e = 18   # closing time of nursery in 24 hours
     #
-    if nxt.time() >= datetime.time(e):
+    if now.hour >= datetime.time(e).hour:
         nxt = datetime.datetime(now.year, now.month, now.day+1, datetime.time(s).hour, 0, 0, 0)
-    elif nxt.time() < datetime.time(s):
+    elif now.hour < datetime.time(s).hour:
         nxt = datetime.datetime(now.year, now.month, now.day, datetime.time(s).hour, 0, 0, 0)
+    else:
+        nxt = now + datetime.timedelta(hours=1)
     #
     print('****************************************************************')
     print('Operation run at:            {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
