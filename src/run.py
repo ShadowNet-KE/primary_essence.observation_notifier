@@ -9,16 +9,6 @@ from notifications.notify_email import send_notifications_all
 
 while True:
     #
-    s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
-    #
-    r = {}
-    o = {}
-    for child_id in creds.CHILD_ID:
-        r[child_id] = get_learningJournal(s, child_id)
-        o[child_id] = find_observations(s, r[child_id])
-        #
-        send_notifications_all(child_id, o[child_id])
-    #
     now = datetime.datetime.now()
     #
     s = 7    # opening time of nursery in 24 hours
@@ -32,8 +22,25 @@ while True:
         nxt = now + datetime.timedelta(hours=1)
     #
     print('****************************************************************')
-    print('Operation run at:            {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
-    print('Next scheduled run will be:  {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
+    print('Operation started at:            {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
+    #
+    try:
+        s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
+        #
+        r = {}
+        o = {}
+        for child_id in creds.CHILD_ID:
+            r[child_id] = get_learningJournal(s, child_id)
+            o[child_id] = find_observations(s, r[child_id])
+            #
+            send_notifications_all(child_id, o[child_id])
+        #
+        print('Operation completed successfully')
+        #
+    except Exception as e:
+        print('Error running operation: {error}'.format(error=e))
+    #
+    print('Next scheduled run will be:      {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     print('****************************************************************')
     #
     slp = (nxt - now).seconds
