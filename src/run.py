@@ -27,15 +27,17 @@ while True:
     try:
         s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
         #
+        count = 0
+        #
         r = {}
         o = {}
         for child_id in creds.CHILD_ID:
             r[child_id] = get_learningJournal(s, child_id)
             o[child_id] = find_observations(s, r[child_id])
             #
-            send_notifications_all(child_id, o[child_id])
+            count += send_notifications_all(child_id, o[child_id])
         #
-        print('Operation completed successfully')
+        print('Operation completed successfully: {count} email(s) updates found'.format(count=count))
         #
     except Exception as e:
         print('Error running operation: {error}'.format(error=e))

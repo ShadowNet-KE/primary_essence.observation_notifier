@@ -9,11 +9,16 @@ from notification_history import check_history, add_history
 
 def send_notifications_all(child_id, objObs):
     #
+    count = 0
+    #
     for objOb in objObs:
         if not check_history(child_id, objOb.id()):
             result = email_observations(objOb)
             if result:
                 add_history(child_id, objOb.id())
+                count += 1
+    #
+    return count
 
 
 def email_observations(objOb):
