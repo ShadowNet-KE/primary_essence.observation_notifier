@@ -22,7 +22,7 @@ while True:
         nxt = now + datetime.timedelta(hours=1)
     #
     print('****************************************************************')
-    print('Operation started at:            {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
+    print('Operation started at:              {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
     #
     try:
         s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
@@ -37,12 +37,12 @@ while True:
             #
             count += send_notifications_all(child_id, o[child_id])
         #
-        print('Operation completed successfully: {count} email(s) updates found'.format(count=count))
+        print('Operation completed successfully:  {count} email(s) updates found'.format(count=count))
         #
     except Exception as e:
-        print('Error running operation: {error}'.format(error=e))
+        print('Error running operation:           {error}'.format(error=e))
     #
-    print('Next scheduled run will be:      {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
+    print('Next scheduled run will be:        {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     print('****************************************************************')
     #
     slp = (nxt - now).seconds
