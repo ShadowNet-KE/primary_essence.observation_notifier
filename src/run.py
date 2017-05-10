@@ -15,7 +15,7 @@ while True:
     e = 18   # closing time of nursery in 24 hours
     #
     if now.hour >= datetime.time(e).hour:
-        nxt = datetime.datetime(now.year, now.month, now.day+1, datetime.time(s).hour, 0, 0, 0)
+        nxt = datetime.datetime(now.year, now.month, now.day, datetime.time(s).hour, 0, 0, 0) + datetime.timedelta(days=1)
     elif now.hour < datetime.time(s).hour:
         nxt = datetime.datetime(now.year, now.month, now.day, datetime.time(s).hour, 0, 0, 0)
     else:
