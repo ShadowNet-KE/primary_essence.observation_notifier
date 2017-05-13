@@ -22,13 +22,16 @@ def find_observations(s, data):
             title = title.replace(rep, '')
         #
         # img
-        img = ''
-        for img_attr in div.findAll("img")[0].attrs:
-            if img_attr[0] == 'src':
-                r = s.get(img_attr[1])
-                if r.ok:
-                    img = r.content
-                break
+        img = []
+        imgs = div.findAll("img")
+        if len(imgs) > 0:
+            for i in imgs:
+                for img_attr in i.attrs:
+                    if img_attr[0] == 'src':
+                        r = s.get(img_attr[1])
+                        if r.ok:
+                            img.append(r.content)
+                        break
         #
         # comment
         comment = div.findAll("div", {"class": "LjItemPrintableCommentWrapper"})

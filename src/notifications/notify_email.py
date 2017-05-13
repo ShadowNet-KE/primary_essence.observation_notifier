@@ -41,9 +41,10 @@ def compile_email(objOb):
     msgText = MIMEText('<b>{body}</b><br><img src="cid:{img}"><br>'.format(body=objOb.comment(), img=image_name), 'html')
     msg.attach(msgText)
     #
-    img = MIMEImage(objOb.img())
-    img.add_header('Content-ID', '<{image}>'.format(image=image_name))
-    msg.attach(img)
+    for i in objOb.imgs():
+        img = MIMEImage(i)
+        img.add_header('Content-ID', '<{image}>'.format(image=image_name))
+        msg.attach(img)
     #
     return msg
 
