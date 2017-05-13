@@ -23,15 +23,23 @@ def find_observations(s, data):
         #
         # img
         img = []
+        vid = []
         imgs = div.findAll("img")
         if len(imgs) > 0:
             for i in imgs:
                 for img_attr in i.attrs:
+                    #
                     if img_attr[0] == 'src':
-                        r = s.get(img_attr[1])
+                        src = img_attr[1]
+                    elif img_attr[0] == 'onclick':
+                        onclick = img_attr[1]
+                    #
+                    if 'video' in src:
+                        pass
+                    else:
+                        r = s.get(src)
                         if r.ok:
                             img.append(r.content)
-                        break
         #
         # comment
         comment = div.findAll("div", {"class": "LjItemPrintableCommentWrapper"})
