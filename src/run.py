@@ -33,7 +33,7 @@ while True:
         o = {}
         for child_id in creds.CHILD_ID:
             r[child_id] = get_learningJournal(s, child_id)
-            o[child_id] = find_observations(s, r[child_id])
+            o[child_id] = find_observations(s, r[child_id], child_id)
             #
             count += send_notifications_all(child_id, o[child_id])
         #
