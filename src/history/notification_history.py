@@ -31,11 +31,15 @@ def get_child_history(child_id):
 
 
 def check_history(child_id, item_id):
-    history = get_child_history(child_id)
+    history = get_child_history(child_id).keys()
     return item_id in history
 
 
-def add_history(child_id, item_id):
+def add_history(child_id, item_id, title, notes):
     data = get_cfg_bundles_json()
-    data[child_id].append(item_id)
+    #
+    data[child_id][item_id] = {}
+    data[child_id][item_id]['title'] = title
+    data[child_id][item_id]['notes'] = notes
+    #
     write_config_bundles(data)

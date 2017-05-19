@@ -15,7 +15,7 @@ def send_notifications_all(child_id, objObs):
     for objOb in objObs:
         result = email_observations(objOb)
         if result:
-            add_history(child_id, objOb.id())
+            add_history(child_id, objOb.id(), objOb.title(), objOb.notes())
             count += 1
     #
     return count
@@ -27,6 +27,7 @@ def email_observations(objOb):
         msg = compile_email(objOb)
         return send_email(msg)
     except Exception as e:
+        print("ERROR sending email for {id}: {error}".format(id=objOb.id(), error=e))
         return False
 
 
@@ -37,8 +38,9 @@ def compile_email(objOb):
     msg["From"] = creds.USERNAME
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title())
     #
-    # msgText = MIMEText('<b>{body}</b><br><img src="cid:{img}"><br>'.format(body=objOb.comment(), img=image_name), 'html')
-    msgText = MIMEText('<b>{body}</b><br>'.format(body=objOb.comment()), 'html')
+    text = '{notes}<br><br>'.format(notes=objOb.notes())
+    #
+    msgText = MIMEText(text, 'html')
     msg.attach(msgText)
     #
     if objOb.imgs() > 0:

@@ -2,10 +2,10 @@
 
 class ObjObservation:
 
-    def __init__(self, id, title, comment, imgs=False, vids=False):
+    def __init__(self, id, title, notes, imgs=False, vids=False):
         self._id = id
         self._title = title
-        self._comment = comment
+        self._notes = notes
         self._imgs = imgs
         self._vids = vids
 
@@ -15,8 +15,8 @@ class ObjObservation:
     def title(self):
         return self._title
 
-    def comment(self):
-        return self._comment
+    def notes(self):
+        return self._notes
 
     def imgs(self):
         return self._imgs
