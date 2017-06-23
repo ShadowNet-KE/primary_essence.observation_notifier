@@ -9,6 +9,8 @@ from notifications.notify_email import send_notifications_all
 
 while True:
     #
+    err_count = 0
+    #
     now = datetime.datetime.now()
     #
     s = 7    # opening time of nursery in 24 hours
@@ -38,9 +40,12 @@ while True:
             count += send_notifications_all(child_id, o[child_id])
         #
         print('Operation completed successfully:  {count} email(s) updates found'.format(count=count))
+        err_count = 0
         #
     except Exception as e:
-        print('Error running operation:           {error}'.format(error=e))
+        err_count =+ 1
+        print('Error running operation:           Attempt {err_count} - {error}'.format(err_count=err_count,
+                                                                                        error=e))
     #
     print('Next scheduled run will be:        {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     print('****************************************************************')
