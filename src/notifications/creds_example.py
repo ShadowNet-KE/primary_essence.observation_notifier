@@ -6,3 +6,4 @@ USERNAME = 'another@emailserver.com'
 PASSWORD = 'password'
 
 EML_TO = ['recipient_one@emailserver.com', 'recipient_two@emailserver.com']
+ERR_EML_TO = 'recipient_one@emailserver.com'

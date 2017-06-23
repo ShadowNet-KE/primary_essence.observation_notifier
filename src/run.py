@@ -5,23 +5,31 @@ from primaryessence.session import create_session
 from primaryessence.parse_observations import find_observations
 from primaryessence import creds
 from notifications.notify_email import send_notifications_all
+from notifications.error_email import send_error_email
 
 
-while True:
-    #
-    err_count = 0
-    #
-    now = datetime.datetime.now()
+err_count = 0
+err_encountered = False
+
+
+def get_next(now, err_encountered):
     #
     s = 7    # opening time of nursery in 24 hours
     e = 18   # closing time of nursery in 24 hours
     #
-    if now.hour >= datetime.time(e).hour:
+    if now.hour >= datetime.time(e).hour or err_encountered:
         nxt = datetime.datetime(now.year, now.month, now.day, datetime.time(s).hour, 0, 0, 0) + datetime.timedelta(days=1)
     elif now.hour < datetime.time(s).hour:
         nxt = datetime.datetime(now.year, now.month, now.day, datetime.time(s).hour, 0, 0, 0)
     else:
         nxt = now + datetime.timedelta(hours=1)
+    #
+    return nxt
+
+
+while True:
+    #
+    now = datetime.datetime.now()
     #
     print('****************************************************************')
     print('Operation started at:              {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
@@ -40,15 +48,25 @@ while True:
             count += send_notifications_all(child_id, o[child_id])
         #
         print('Operation completed successfully:  {count} email updates found'.format(count=count))
+        #
         err_count = 0
+        err_encountered = False
         #
     except Exception as e:
         err_count =+ 1
-        print('Error running operation:           Attempt {err_count} - {error}'.format(err_count=err_count,
-                                                                                        error=e))
+        if err_count > 4:
+            err_encountered = True
+            send_error_email()
+            print('Error running operation:           Error limit reached - {error}'.format(error=e))
+        else:
+            print('Error running operation:           Attempt {err_count} - {error}'.format(err_count=err_count,
+                                                                                            error=e))
+    #
+    nxt = get_next(now, err_encountered)
     #
     print('Next scheduled run will be:        {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     print('****************************************************************')
+    #
     #
     slp = (nxt - now).seconds
     #
