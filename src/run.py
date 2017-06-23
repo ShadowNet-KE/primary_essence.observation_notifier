@@ -39,7 +39,7 @@ while True:
             #
             count += send_notifications_all(child_id, o[child_id])
         #
-        print('Operation completed successfully:  {count} email(s) updates found'.format(count=count))
+        print('Operation completed successfully:  {count} email updates found'.format(count=count))
         err_count = 0
         #
     except Exception as e:

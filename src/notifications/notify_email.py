@@ -3,6 +3,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart, MIMEBase
 from email.mime.text import MIMEText
 from email import Encoders
+from datetime import datetime
 
 import creds
 from src.history.notification_history import add_history
@@ -15,7 +16,12 @@ def send_notifications_all(child_id, objObs):
     for objOb in objObs:
         result = email_observations(objOb)
         if result:
-            add_history(child_id, objOb.id(), objOb.title(), objOb.notes())
+            add_history(child_id, objOb.id(),
+                        objOb.title(), objOb.notes(),
+                        len(objOb.imgs()),
+                        len(objOb.vids()),
+                        objOb.date_observation(),
+                        datetime.now().strftime('%Y/%m/%d %H:%M'))
             count += 1
     #
     return count

@@ -89,8 +89,10 @@ def find_observations(s, data, child_id):
                                                                        content=item.text)
 
                         #
+                        date_observation = title[-10:]
+                        #
                         # Create observation object and add to list
-                        o.append(ObjObservation(id, title, notes, imgs=img, vids=vid))
+                        o.append(ObjObservation(id, title, notes, img, vid, date_observation))
             except Exception as e:
                 pass
     #

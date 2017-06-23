@@ -5,8 +5,12 @@ THIS PYTHON FILE TO BE RENAMED TO 'history.json' IN PRODUCTION
 
 {"<child_id>": {
   "<report_id>": {
+    "date_observation": "<dd/mm/yyyy>",
     "title": "<title>",
-    "notes": "<notes>"
+    "vid_count": 0,
+    "notes": "<notes>",
+    "date_email": "yyyy/mm/dd hh:mm",
+    "img_count": 0
   },
   "<report_id>": {
     .
