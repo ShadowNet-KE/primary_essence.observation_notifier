@@ -10,7 +10,7 @@ def find_observations(s, data, child_id):
     #
     o = []
     #
-    div_items = soup.findAll("div", {"class": "item"})
+    div_items = soup.findAll("div", {"class": ["item", "item active"]})
     for item in div_items:
         #
         for div in item.contents:
