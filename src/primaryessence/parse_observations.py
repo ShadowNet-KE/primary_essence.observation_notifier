@@ -74,20 +74,19 @@ def find_observations(s, data, child_id):
                                             vid.append(r.content)
                         #
                         #
-                        div_othernotes = div.findAll(["h4", "h5", "p"])
-                        comment = div.findAll("div", {"class": "LjItemPrintableCommentWrapper"})[0]
-                        div_othernotes.insert(1, comment)
-                        #
                         notes = ''
-                        #
-                        for item in div_othernotes:
-                            if item.name == 'div':
-                                name = 'p'
-                            else:
-                                name = item.name
-                            notes += '<{tag}>{content}</{tag}>'.format(tag=name,
-                                                                       content=item.text)
-
+                        div_othernotes = div.findAll(["h4", "h5", "p"])
+                        if len(div_othernotes) > 0:
+                            comment = div.findAll("div", {"class": "LjItemPrintableCommentWrapper"})[0]
+                            div_othernotes.insert(1, comment)
+                            #
+                            for item in div_othernotes:
+                                if item.name == 'div':
+                                    name = 'p'
+                                else:
+                                    name = item.name
+                                notes += '<{tag}>{content}</{tag}>'.format(tag=name,
+                                                                           content=item.text)
                         #
                         date_observation = title[-10:]
                         #
