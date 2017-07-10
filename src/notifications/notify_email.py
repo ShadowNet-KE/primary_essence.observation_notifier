@@ -39,14 +39,14 @@ def email_observations(objOb):
 
 def compile_email(objOb):
     #
-    msg = MIMEMultipart()
+    msg = MIMEMultipart('mixed')
     msg["To"] = '; '.join(creds.EML_TO)
     msg["From"] = creds.USERNAME
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title())
     #
     text = '{notes}<br><br>'.format(notes=objOb.notes())
-    #
     msgText = MIMEText(text, 'html')
+    #
     msg.attach(msgText)
     #
     if objOb.imgs() > 0:
