@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email import Encoders
 from datetime import datetime
 
-import creds
+import config
 from src.history.notification_history import add_history
 
 
@@ -40,8 +40,8 @@ def email_observations(objOb):
 def compile_email(objOb):
     #
     msg = MIMEMultipart('mixed')
-    msg["To"] = '; '.join(creds.EML_TO)
-    msg["From"] = creds.USERNAME
+    msg["To"] = '; '.join(config.get_config_notifications_emailto())
+    msg["From"] = config.get_config_email_username()
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title())
     #
     text = '{notes}<br><br>'.format(notes=objOb.notes())
@@ -73,10 +73,14 @@ def compile_email(objOb):
 
 
 def send_email(msg):
-    eml = smtplib.SMTP(creds.SERVER, creds.PORT)
+    eml = smtplib.SMTP(config.get_config_email_server(),
+                       config.get_config_email_port())
     eml.starttls()
     eml.set_debuglevel(0)
-    eml.login(creds.USERNAME, creds.PASSWORD)
-    eml.sendmail(creds.USERNAME, creds.EML_TO, msg.as_string())
+    eml.login(config.get_config_email_username(),
+              config.get_config_email_password())
+    eml.sendmail(config.get_config_email_username(),
+                 config.get_config_notifications_emailto(),
+                 msg.as_string())
     eml.quit()
     return True

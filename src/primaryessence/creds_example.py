@@ -1,8 +1,0 @@
-# EXAMPLE FILE - TO BE UPDATED WITH PERSONAL DETAILS
-# THIS PYTHON FILE TO BE RENAMED TO 'creds.py' IN PRODUCTION
-
-PREFIX = 'beb'
-USERNAME = 'beb.forename.surname'
-PASSWORD = 'password'
-NURSERY = 'bridgeend-brighouse'
-CHILD_ID = ['123456']

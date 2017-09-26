@@ -1,8 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-import creds
+import config
 
 
 def send_error_email():
@@ -13,8 +12,8 @@ def send_error_email():
 def compile_error_email():
     #
     msg = MIMEMultipart()
-    msg["To"] = '; '.join(creds.ERR_EML_TO)
-    msg["From"] = creds.USERNAME
+    msg["To"] = '; '.join(config.get_config_notifications_erroremail())
+    msg["From"] = config.get_config_email_username()
     msg["Subject"] = 'Primary Essence: ERROR LIMIT REACHED'
     #
     text = 'Error limit reached. An attempt will next be made tomorrow, however it is advised to check the application to investigate the error.'
@@ -26,10 +25,14 @@ def compile_error_email():
 
 
 def send_email(msg):
-    eml = smtplib.SMTP(creds.SERVER, creds.PORT)
+    eml = smtplib.SMTP(config.get_config_email_server(),
+                       config.get_config_email_port())
     eml.starttls()
     eml.set_debuglevel(0)
-    eml.login(creds.USERNAME, creds.PASSWORD)
-    eml.sendmail(creds.USERNAME, creds.ERR_EML_TO, msg.as_string())
+    eml.login(config.get_config_email_username(),
+              config.get_config_email_password())
+    eml.sendmail(config.get_config_email_username(),
+                 config.get_config_notifications_erroremail(),
+                 msg.as_string())
     eml.quit()
     return True

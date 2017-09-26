@@ -3,9 +3,9 @@ import datetime
 from primaryessence.get_data import get_learningJournal
 from primaryessence.session import create_session
 from primaryessence.parse_observations import find_observations
-from primaryessence import creds
 from notifications.notify_email import send_notifications_all
 from notifications.error_email import send_error_email
+import config
 
 
 err_count = 0
@@ -35,13 +35,16 @@ while True:
     print('Operation started at:              {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
     #
     try:
-        s = create_session(creds.NURSERY, creds.PREFIX, creds.USERNAME, creds.PASSWORD)
+        s = create_session(config.get_config_primaryessence_nursery(),
+                           config.get_config_primaryessence_prefix(),
+                           config.get_config_primaryessence_username(),
+                           config.get_config_primaryessence_password())
         #
         count = 0
         #
         r = {}
         o = {}
-        for child_id in creds.CHILD_ID:
+        for child_id in config.get_config_primaryessence_childids():
             r[child_id] = get_learningJournal(s, child_id)
             o[child_id] = find_observations(s, r[child_id], child_id)
             #
