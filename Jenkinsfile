@@ -1,6 +1,7 @@
 echo "Running Build ID: ${env.BUILD_ID}"
 
 String commit_id
+String docker_volumes
 String deployLogin
 String docker_img_name
 def docker_img
@@ -13,6 +14,11 @@ node {
         // Parameters passed through from the Jenkins Pipeline configuration
         string(defaultValue: 'https://github.com/robe16/primaryessence_update-checker.git', description: 'GitHub URL for checking out project', name: 'githubUrl')
         string(defaultValue: 'primary_essence_update_checker', description: 'Name of application for Docker image and container', name: 'appName')
+        string(defaultValue: '~/config/primary_essence_update_checker/config.json', description: 'Location of config json file on host device', name: 'fileConfig')
+        string(defaultValue: '~/config/primary_essence_update_checker/history.json', description: 'Location of history json file on host device', name: 'fileHistory')
+        //
+        docker_volumes = ["-v ${params.fileConfig}:/primary_essence/update_checker/config.json",
+                          "-v ${params.fileHistory}:/primary_essence/update_checker/history/history.json"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
@@ -55,7 +61,7 @@ node {
 
         stage("start container"){
             sh "ssh ${deployLogin} \"docker rm -f ${params.appName} && echo \"container ${params.appName} removed\" || echo \"container ${params.appName} does not exist\"\""
-            sh "ssh ${deployLogin} \"docker run -d --name ${params.appName} ${docker_img_name_latest}\""
+            sh "ssh ${deployLogin} \"docker run -d ${docker_volumes} --name ${params.appName} ${docker_img_name_latest}\""
         }
 
     } else {
