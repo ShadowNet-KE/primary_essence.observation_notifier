@@ -6,7 +6,7 @@ from email import Encoders
 from datetime import datetime
 
 import config
-from src.history.notification_history import add_history
+from history.notification_history import add_history
 
 
 def send_notifications_all(child_id, objObs):

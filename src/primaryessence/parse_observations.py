@@ -1,7 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 from obj_observation import ObjObservation
-from src.history.notification_history import check_history
+from history.notification_history import check_history
 
 
 def find_observations(s, data, child_id):
