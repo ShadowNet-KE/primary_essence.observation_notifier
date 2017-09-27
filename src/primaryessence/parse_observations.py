@@ -1,5 +1,5 @@
 import json
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from obj_observation import ObjObservation
 from src.history.notification_history import check_history
 
