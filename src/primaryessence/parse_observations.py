@@ -6,7 +6,7 @@ from history.notification_history import check_history
 
 def find_observations(s, data, child_id):
     #
-    soup = BeautifulSoup(data)
+    soup = BeautifulSoup(data, "html.parser")
     #
     o = []
     #
