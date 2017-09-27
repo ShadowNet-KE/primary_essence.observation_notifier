@@ -41,7 +41,7 @@ def get_config_email_password():
 
 def get_config_primaryessence():
     data = get_cfg_bindings_json()
-    return data['primaryessence']
+    return data['primary_essence']
 
 
 def get_config_primaryessence_prefix():
