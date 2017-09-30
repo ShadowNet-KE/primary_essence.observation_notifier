@@ -2,7 +2,7 @@ import json
 import os
 
 
-def get_cfg_bindings_json():
+def get_cfg_json():
     with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') as data_file:
         data = json.load(data_file)
     return data['config']
@@ -12,7 +12,7 @@ def get_cfg_bindings_json():
 ################################################################################################
 
 def get_config_email():
-    data = get_cfg_bindings_json()
+    data = get_cfg_json()
     return data['email']
 
 
@@ -40,7 +40,7 @@ def get_config_email_password():
 ################################################################################################
 
 def get_config_primaryessence():
-    data = get_cfg_bindings_json()
+    data = get_cfg_json()
     return data['primary_essence']
 
 
@@ -73,7 +73,7 @@ def get_config_primaryessence_childids():
 ################################################################################################
 
 def get_config_notifications():
-    data = get_cfg_bindings_json()
+    data = get_cfg_json()
     return data['notifications']
 
 
