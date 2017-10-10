@@ -61,8 +61,10 @@ node {
         }
 
         stage("start container"){
+            // Stop existing container if running
             sh "ssh ${deployLogin} \"docker rm -f ${params.appName} && echo \"container ${params.appName} removed\" || echo \"container ${params.appName} does not exist\"\""
-            sh "ssh ${deployLogin} \"docker run -d ${docker_volumes} --name ${params.appName} ${docker_img_name_latest}\""
+            // Start new container
+            sh "ssh ${deployLogin} \"docker run --restart unless-stopped -d ${docker_volumes} --name ${params.appName} ${docker_img_name_latest}\""
         }
 
     } else {
