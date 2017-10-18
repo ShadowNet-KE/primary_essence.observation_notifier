@@ -95,7 +95,8 @@ def trimStrings(str):
                   '                                        ',
                   '                    ',
                   '                ',
-                  '&nbsp;']
+                  '&nbsp;',
+                  '\u00a']
     #
     for rep in to_replace:
         str = str.replace(rep, '')
