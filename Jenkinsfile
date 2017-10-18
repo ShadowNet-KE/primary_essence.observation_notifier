@@ -16,9 +16,11 @@ node {
         string(defaultValue: 'primary_essence_update_checker', description: 'Name of application for Docker image and container', name: 'appName')
         string(defaultValue: '~/config/primary_essence_update_checker/config.json', description: 'Location of config json file on host device', name: 'fileConfig')
         string(defaultValue: '~/config/primary_essence_update_checker/history.json', description: 'Location of history json file on host device', name: 'fileHistory')
+        string(defaultValue: '~/logs/primary_essence.log', description: 'Location of log file on host device', name: 'fileLog')
         //
         docker_volumes = ["-v ${params.fileConfig}:/primary_essence/update_checker/config.json",
-                          "-v ${params.fileHistory}:/primary_essence/update_checker/history/history.json"].join(" ")
+                          "-v ${params.fileHistory}:/primary_essence/update_checker/history/history.json",
+                          "-v ${params.fileLog}:/primary_essence/update_checker/log/logs.json"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //

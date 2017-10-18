@@ -5,6 +5,7 @@ from primaryessence.session import create_session
 from primaryessence.parse_observations import find_observations
 from notifications.notify_email import send_notifications_all
 from notifications.error_email import send_error_email
+from log.log import log_general, log_error
 import config
 
 
@@ -31,8 +32,7 @@ while True:
     #
     now = datetime.datetime.now()
     #
-    print('****************************************************************')
-    print('Operation started at:              {dt}'.format(dt=now.strftime('%Y-%m-%d %H:%M')))
+    log_general('Operation started at')
     #
     try:
         s = create_session(config.get_config_primaryessence_nursery(),
@@ -50,7 +50,7 @@ while True:
             #
             count += send_notifications_all(child_id, o[child_id])
         #
-        print('Operation completed successfully:  {count} email updates found'.format(count=count))
+        log_general('Operation completed successfully:  {count} email updates found'.format(count=count))
         #
         err_count = 0
         err_encountered = False
@@ -60,15 +60,14 @@ while True:
         if err_count > 4:
             err_encountered = True
             send_error_email()
-            print('Error running operation:           Error limit reached - {error}'.format(error=e))
+            log_error('Error running operation: Error limit reached - {error}'.format(error=e))
         else:
-            print('Error running operation:           Attempt {err_count} - {error}'.format(err_count=err_count,
+            log_error('Error running operation: Attempt {err_count} - {error}'.format(err_count=err_count,
                                                                                             error=e))
     #
     nxt = get_next(now, err_encountered)
     #
-    print('Next scheduled run will be:        {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
-    print('****************************************************************')
+    log_general('Next scheduled run will be: {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     #
     #
     slp = (nxt - now).seconds
