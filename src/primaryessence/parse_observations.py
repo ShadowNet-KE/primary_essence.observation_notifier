@@ -33,30 +33,19 @@ def find_observations(s, data, child_id):
                         if len(imgs) > 0:
                             for i in imgs:
                                 #
-                                src = False
-                                onclick = False
-                                #
-                                for img_attr in i.attrs:
-                                    if img_attr[0] == 'src':
-                                        src = img_attr[1]
-                                #
-                                if bool(src):
+                                try:
+                                    src = i.attrs['src']
                                     r = s.get(src)
                                     if r.ok:
                                         img.append(r.content)
+                                except:
+                                    pass
                         else:
                             v_imgs = div.parent.findAll("img", {"src": "/Content/Images/Master/video-placeholder.png"})
                             for v_img in v_imgs:
                                 #
-                                onclick = False
-                                #
-                                for img_attr in v_img.attrs:
-                                    if img_attr[0] == 'onclick':
-                                        onclick = img_attr[1]
-                                #
-                                if bool(onclick):
-                                    # id = onclick.replace("GetPresignedVideoToPlay('/Observations/GetVideoForBrowserPlay/", "")
-                                    # id = id.replace("/{child_id}');".format(child_id=child_id), "")
+                                try:
+                                    onclick = v_img.attrs['onclick']
                                     #
                                     if not check_history(child_id, id):
                                         #
@@ -72,6 +61,8 @@ def find_observations(s, data, child_id):
                                         r = s.get(url_vid)
                                         if r.ok:
                                             vid.append(r.content)
+                                except:
+                                    pass
                         #
                         #
                         notes = ''
