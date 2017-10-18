@@ -32,7 +32,7 @@ while True:
     #
     now = datetime.datetime.now()
     #
-    log_general('Operation started at')
+    log_general('Operation started')
     #
     try:
         s = create_session(config.get_config_primaryessence_nursery(),
