@@ -20,7 +20,7 @@ node {
         //
         docker_volumes = ["-v ${params.fileConfig}:/primary_essence/update_checker/config.json",
                           "-v ${params.fileHistory}:/primary_essence/update_checker/history/history.json",
-                          "-v ${params.fileLog}:/primary_essence/update_checker/log/logs.json"].join(" ")
+                          "-v ${params.fileLog}:/primary_essence/update_checker/log/logs.log"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
