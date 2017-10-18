@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart, MIMEBase
 from email.mime.text import MIMEText
 from email import Encoders
 from datetime import datetime
+from log.log import log_error
 
 import config
 from history.notification_history import add_history
@@ -33,7 +34,7 @@ def email_observations(objOb):
         msg = compile_email(objOb)
         return send_email(msg)
     except Exception as e:
-        print("ERROR sending email for {id}: {error}".format(id=objOb.id(), error=e))
+        log_error("ERROR sending email for {id}: {error}".format(id=objOb.id(), error=e))
         return False
 
 
