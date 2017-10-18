@@ -43,9 +43,9 @@ def compile_email(objOb):
     msg = MIMEMultipart('mixed')
     msg["To"] = '; '.join(config.get_config_notifications_emailto())
     msg["From"] = config.get_config_email_username()
-    msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title())
+    msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title().encode('utf-8'))
     #
-    text = '{notes}<br><br>'.format(notes=objOb.notes())
+    text = '{notes}<br><br>'.format(notes=objOb.notes().encode('utf-8'))
     msgText = MIMEText(text, 'html')
     #
     msg.attach(msgText)
