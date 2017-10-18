@@ -17,9 +17,9 @@ def find_observations(s, data, child_id):
             #
             try:
                 #
-                if div.attrMap['id'].startswith('ljPrintItemWrapper_'):
+                if div.get('id').startswith('ljPrintItemWrapper_'):
                     #
-                    id = div.attrMap['id'].replace('ljPrintItemWrapper_', '')
+                    id = div.get('id').replace('ljPrintItemWrapper_', '')
                     #
                     if not check_history(child_id, id):
                         # title
