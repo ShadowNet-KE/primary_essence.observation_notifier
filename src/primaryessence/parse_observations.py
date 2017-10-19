@@ -91,14 +91,7 @@ def find_observations(s, data, child_id):
 
 def trimStrings(str):
     #
-    to_replace = ['\r\n',
-                  '                                        ',
-                  '                    ',
-                  '                ',
-                  '&nbsp;',
-                  '\u00a']
-    #
-    for rep in to_replace:
-        str = str.replace(rep, '')
+    str = str.replace('\r\n', '')
+    str = str.strip()
     #
     return str
