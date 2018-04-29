@@ -5,7 +5,8 @@ from primaryessence.session import create_session
 from primaryessence.parse_observations import find_observations
 from notifications.notify_email import send_notifications_all
 from notifications.error_email import send_error_email
-from log.log import log_general, log_error
+from log.log import log_internal
+from resources.global_resources.logs import logException, logPass
 import config
 
 
@@ -32,7 +33,7 @@ while True:
     #
     now = datetime.datetime.now()
     #
-    log_general('Operation started')
+    log_internal(logPass, 'Operation started')
     #
     try:
         s = create_session(config.get_config_primaryessence_nursery(),
@@ -50,7 +51,7 @@ while True:
             #
             count += send_notifications_all(child_id, o[child_id])
         #
-        log_general('Operation completed successfully:  {count} email updates found'.format(count=count))
+        log_internal(logPass, 'Operation completed successfully:  {count} email updates found'.format(count=count))
         #
         err_count = 0
         err_encountered = False
@@ -60,14 +61,17 @@ while True:
         if err_count > 4:
             err_encountered = True
             send_error_email()
-            log_error('Error running operation: Error limit reached - {error}'.format(error=e))
+            log_internal(logException, 'scheduled operation',
+                         description='Error running operation: Error limit reached',
+                         exception=e)
         else:
-            log_error('Error running operation: Attempt {err_count} - {error}'.format(err_count=err_count,
-                                                                                            error=e))
+            log_internal(logException, 'scheduled operation',
+                         description='Error running operation: Attempt {err_count}'.format(err_count=err_count),
+                         exception=e)
     #
     nxt = get_next(now, err_encountered)
     #
-    log_general('Next scheduled run will be: {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
+    log_internal(logPass, 'Next scheduled run will be: {dt}'.format(dt=nxt.strftime('%Y-%m-%d %H:%M')))
     #
     #
     slp = (nxt - now).seconds
