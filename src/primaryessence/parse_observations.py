@@ -45,11 +45,13 @@ def find_observations(s, data, child_id):
                         for i in imgs:
                             #
                             try:
-                                src = i.attrs['src']
+                                onclick = i.attrs['onclick']
+                                src = onclick.replace("ShowInnerLJItemImage('innerLJItemImgHolder_{id}', '".format(id=id), "")
+                                src = src.replace("');", "")
                                 r = s.get(src)
                                 if r.ok:
                                     img.append(r.content)
-                            except:
+                            except Exception as e:
                                 pass
                     else:
                         v_imgs = div_item_body_media.parent.findAll("img", {"src": "/Content/Images/Master/video-placeholder.png"})

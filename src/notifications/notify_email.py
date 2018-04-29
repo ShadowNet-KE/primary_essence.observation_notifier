@@ -52,6 +52,8 @@ def compile_email(objOb):
     #
     text = ''
     #
+    text += '<h2>{title}</h2>'.format(title=objOb.title())
+    #
     if not objOb.comment() == '':
         text += '<h3>Comments</h3>'
         text += '<p>{comment}</p>'.format(comment=objOb.comment().encode('utf-8'))
