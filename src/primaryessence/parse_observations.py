@@ -42,17 +42,33 @@ def find_observations(s, data, child_id):
                     #
                     imgs = div_item_body_media.findAll("img")
                     if len(imgs) > 0:
-                        for i in imgs:
-                            #
-                            try:
-                                onclick = i.attrs['onclick']
-                                src = onclick.replace("ShowInnerLJItemImage('innerLJItemImgHolder_{id}', '".format(id=id), "")
-                                src = src.replace("');", "")
-                                r = s.get(src)
-                                if r.ok:
-                                    img.append(r.content)
-                            except Exception as e:
-                                pass
+                        #
+                        if len(imgs) == 1:
+                            src = imgs[0].attrs['src']
+                            r = s.get(src)
+                            if r.ok:
+                                img.append(r.content)
+                        else:
+                            for i in imgs:
+                                #
+                                src = ''
+                                #
+                                try:
+                                    onclick = i.attrs['onclick']
+                                    src = onclick.replace("ShowInnerLJItemImage('innerLJItemImgHolder_{id}', '".format(id=id), "")
+                                    src = src.replace("');", "")
+                                except KeyError:
+                                    continue
+                                except Exception as e:
+                                    log_internal(logException, 'Error retrieving image for observation',
+                                                 description='{id} - {title}'.format(id=id, title=title),
+                                                 exception=e)
+                                #
+                                if not src == '':
+                                    r = s.get(src)
+                                    if r.ok:
+                                        img.append(r.content)
+                        #
                     else:
                         v_imgs = div_item_body_media.parent.findAll("img", {"src": "/Content/Images/Master/video-placeholder.png"})
                         for v_img in v_imgs:

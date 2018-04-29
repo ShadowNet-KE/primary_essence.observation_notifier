@@ -67,7 +67,7 @@ def compile_email(objOb):
         text += '<p><i>No \'Comments\' attached</i></p>'
     #
     if not objOb.aol_html() == '':
-        text += '<h3>Aspects of Learning</h3>'
+        text += '<p><b>Aspects of Learning</b></p>'
         text += '<p>{aol}</p>'.format(aol=objOb.aol_html().encode('utf-8'))
     else:
         text += '<p><i>No \'Aspects of Learning\' attached</i></p>'
