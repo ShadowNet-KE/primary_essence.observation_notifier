@@ -2,13 +2,16 @@ import json
 from bs4 import BeautifulSoup
 from obj_observation import ObjObservation
 from history.notification_history import check_history
-
+from log.log import log_internal
+from resources.global_resources.logs import logException
 
 def find_observations(s, data, child_id):
     #
     soup = BeautifulSoup(data, "html.parser")
     #
     o = []
+    #
+    title = ''
     #
     data = soup.find("div", {"id": "ljCarousel"})  # Get carousel div that contains all observations
     div_items = data.findAll("div", {"class": ["item", "item active"]})
@@ -103,7 +106,9 @@ def find_observations(s, data, child_id):
                                             img, vid,
                                             date_observation))
         except Exception as e:
-            pass
+            log_internal(logException, 'parsing of observation',
+                         description='Error running operation - {title}'.format(title=title),
+                         exception=e)
     #
     return o
 
