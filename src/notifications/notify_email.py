@@ -4,7 +4,8 @@ from email.mime.multipart import MIMEMultipart, MIMEBase
 from email.mime.text import MIMEText
 from email import Encoders
 from datetime import datetime
-from log.log import log_error
+from log.log import log_internal
+from resources.global_resources.logs import logException
 
 import config
 from history.notification_history import add_history
@@ -34,7 +35,9 @@ def email_observations(objOb):
         msg = compile_email(objOb)
         return send_email(msg)
     except Exception as e:
-        log_error("ERROR sending email for {id}: {error}".format(id=objOb.id(), error=e))
+        log_internal(logException, 'scheduled operation',
+                     description='Error sending email for {id}'.format(id=objOb.id()),
+                     exception=e)
         return False
 
 
@@ -45,7 +48,15 @@ def compile_email(objOb):
     msg["From"] = config.get_config_email_username()
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title().encode('utf-8'))
     #
-    text = '{notes}<br><br>'.format(notes=objOb.notes().encode('utf-8'))
+    text = '<h4>Comments</h4>'
+    text += '<p{comment}</p><br><br>'.format(comment=objOb.comment().encode('utf-8'))
+    #
+    text += '<h4>Comment By</h4>'
+    text += '<p{commentby}</p><br><br>'.format(commentby=objOb.commentby().encode('utf-8'))
+    #
+    text += '<h4>Aspects of Learning</h4>'
+    text += '<p{aol}</p><br><br>'.format(aol=objOb.aol().encode('utf-8'))
+    #
     msgText = MIMEText(text, 'html')
     #
     msg.attach(msgText)
