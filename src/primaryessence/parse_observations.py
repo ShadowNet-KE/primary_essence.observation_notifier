@@ -76,7 +76,7 @@ def find_observations(s, data, child_id):
                     comment = div_item_body_notes.find("div", {"class": "ess-comment"})
                     commentby = div_item_body_notes.find("div", {"class": "ess-comment-by"})
                     #
-                    aspects_of_learning = div_item_body_notes[1].find("div", {"class": "ibox-content"})
+                    aspects_of_learning = div_item_body_notes.contents[3].find("div", {"class": "ibox-content"})
                     #
 ################################################################
 # TODO - get details of observations held in dict seperately
