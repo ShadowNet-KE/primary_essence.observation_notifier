@@ -55,7 +55,7 @@ def compile_email(objOb):
     text += '<p{commentby}</p><br><br>'.format(commentby=objOb.commentby().encode('utf-8'))
     #
     text += '<h4>Aspects of Learning</h4>'
-    text += '<p{aol}</p><br><br>'.format(aol=objOb.aol().encode('utf-8'))
+    text += '<p{aol}</p>'.format(aol=objOb.aol().encode('utf-8'))
     #
     msgText = MIMEText(text, 'html')
     #
