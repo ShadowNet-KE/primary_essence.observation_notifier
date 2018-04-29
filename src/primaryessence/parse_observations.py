@@ -77,9 +77,21 @@ def find_observations(s, data, child_id):
                     #
                     #
                     comment = div_item_body_notes.find("div", {"class": "ess-comment"})
-                    commentby = div_item_body_notes.find("div", {"class": "ess-comment-by"})
+                    if comment is None:
+                        comment = ''
+                    else:
+                        comment = trimStrings(comment.contents[0])
                     #
-                    aspects_of_learning = div_item_body_notes.contents[3].find("div", {"class": "ibox-content"})
+                    commentby = div_item_body_notes.find("div", {"class": "ess-comment-by"})
+                    if commentby is None:
+                        commentby = ''
+                    else:
+                        commentby = trimStrings(commentby.contents[0]).replace('Comment by: ', '')
+                    #
+                    try:
+                        aspects_of_learning = div_item_body_notes.contents[3].find("div", {"class": "ibox-content"})
+                    except:
+                        aspects_of_learning = '-'
                     #
 ################################################################
 # TODO - get details of observations held in dict seperately
