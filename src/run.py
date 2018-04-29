@@ -60,7 +60,10 @@ while True:
         err_count =+ 1
         if err_count > 4:
             err_encountered = True
-            send_error_email()
+            try:
+                send_error_email()
+            except:
+                pass
             log_internal(logException, 'scheduled operation',
                          description='Error running operation: Error limit reached',
                          exception=e)
