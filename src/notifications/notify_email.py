@@ -16,7 +16,18 @@ def send_notifications_all(child_id, objObs):
     count = 0
     #
     for objOb in objObs:
-        result = email_observations(objOb)
+        try:
+            result = email_observations(objOb)
+        except smtplib.SMTPDataError as e:
+            log_internal(logException, 'scheduled operation',
+                         description='Error sending email for {id}'.format(id=objOb.id()),
+                         exception=e)
+            raise Exception
+        except Exception as e:
+            log_internal(logException, 'scheduled operation',
+                         description='Error sending email for {id}'.format(id=objOb.id()),
+                         exception=e)
+            result = False
         if result:
             add_history(child_id, objOb.id(),
                         objOb.title(),
@@ -32,15 +43,8 @@ def send_notifications_all(child_id, objObs):
 
 
 def email_observations(objOb):
-    #
-    try:
-        msg = compile_email(objOb)
-        return send_email(msg)
-    except Exception as e:
-        log_internal(logException, 'scheduled operation',
-                     description='Error sending email for {id}'.format(id=objOb.id()),
-                     exception=e)
-        return False
+    msg = compile_email(objOb)
+    return send_email(msg)
 
 
 def compile_email(objOb):
