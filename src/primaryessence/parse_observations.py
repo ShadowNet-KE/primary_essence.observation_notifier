@@ -89,25 +89,25 @@ def find_observations(s, data, child_id):
                         commentby = trimStrings(commentby.contents[0]).replace('Comment by: ', '')
                     #
                     try:
-                        aspects_of_learning = div_item_body_notes.contents[3].find("div", {"class": "ibox-content"})
+                        _aol = div_item_body_notes.contents[3].find("div", {"class": "ibox-content"})
+                        _aol_header = _aol.findAll("h4")
+                        _aol_desc = _aol.findAll("ul")
+                        #
+                        aspects_of_learning = {}
+                        #
+                        a = 0
+                        while a < len(_aol_header):
+                            _aol_desc_tags = _aol_desc[a].findAll("li")
+                            _aol_desc_list = []
+                            for l in _aol_desc_tags:
+                                _aol_desc_list.append(trimStrings(l.getText()))
+                            #
+                            aspects_of_learning[_aol_header[a].contents[0]] = _aol_desc_list
+                            #
+                            a += 1
+                        #
                     except:
-                        aspects_of_learning = '-'
-                    #
-################################################################
-# TODO - get details of observations held in dict seperately
-#
-#   <div class ="ibox-content">
-#       <h4>Understanding</h4>
-#       <ul class ="typical-list">
-#           <li>16 - 26 Months - Understands ... </li>
-#           <li>8 - 20 Months - Understanding ...</li>
-#       </ul>
-#       <h4> Shape, space and measure</h4>
-#       <ul class ="typical-list">
-#           <li>16 - 26 Months - Beginning to understand ...</li>
-#       </ul>
-#   </div>
-################################################################
+                        aspects_of_learning = {}
                     #
                     date_observation = title[-10:]
                     #

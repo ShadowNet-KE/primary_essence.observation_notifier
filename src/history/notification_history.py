@@ -35,12 +35,14 @@ def check_history(child_id, item_id):
     return item_id in history
 
 
-def add_history(child_id, item_id, title, notes, img_count, vid_count, date_observation, date_email):
+def add_history(child_id, item_id, title, comment, commentby, aol, img_count, vid_count, date_observation, date_email):
     data = get_cfg_bundles_json()
     #
     data[child_id][item_id] = {}
     data[child_id][item_id]['title'] = title
-    data[child_id][item_id]['notes'] = notes
+    data[child_id][item_id]['comment'] = comment
+    data[child_id][item_id]['commentby'] = commentby
+    data[child_id][item_id]['aol'] = aol
     data[child_id][item_id]['img_count'] = img_count
     data[child_id][item_id]['vid_count'] = vid_count
     data[child_id][item_id]['date_observation'] = date_observation

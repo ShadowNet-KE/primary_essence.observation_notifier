@@ -19,7 +19,9 @@ def send_notifications_all(child_id, objObs):
         result = email_observations(objOb)
         if result:
             add_history(child_id, objOb.id(),
-                        objOb.title(), objOb.notes(),
+                        objOb.title(),
+                        objOb.comment(), objOb.commentby(),
+                        objOb.aol_html(),
                         len(objOb.imgs()),
                         len(objOb.vids()),
                         objOb.date_observation(),
@@ -48,14 +50,21 @@ def compile_email(objOb):
     msg["From"] = config.get_config_email_username()
     msg["Subject"] = 'Primary Essence: {title}'.format(title=objOb.title().encode('utf-8'))
     #
-    text = '<h4>Comments</h4>'
-    text += '<p{comment}</p><br><br>'.format(comment=objOb.comment().encode('utf-8'))
+    text = ''
     #
-    text += '<h4>Comment By</h4>'
-    text += '<p{commentby}</p><br><br>'.format(commentby=objOb.commentby().encode('utf-8'))
+    if not objOb.comment() == '':
+        text += '<h3>Comments</h3>'
+        text += '<p>{comment}</p>'.format(comment=objOb.comment().encode('utf-8'))
+        #
+        text += '<p><b>Comment By:</b> {commentby}</p><br>'.format(commentby=objOb.commentby().encode('utf-8'))
+    else:
+        text += '<p><i>No \'Comments\' attached</i></p>'
     #
-    text += '<h4>Aspects of Learning</h4>'
-    text += '<p{aol}</p>'.format(aol=objOb.aol().encode('utf-8'))
+    if not objOb.aol_html() == '':
+        text += '<h3>Aspects of Learning</h3>'
+        text += '<p>{aol}</p>'.format(aol=objOb.aol_html().encode('utf-8'))
+    else:
+        text += '<p><i>No \'Aspects of Learning\' attached</i></p>'
     #
     msgText = MIMEText(text, 'html')
     #

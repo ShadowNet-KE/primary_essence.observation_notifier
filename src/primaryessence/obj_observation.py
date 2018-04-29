@@ -27,6 +27,14 @@ class ObjObservation:
     def aol(self):
         return self._aol
 
+    def aol_html(self):
+        r = ''
+        for a in self._aol:
+            r += '<h5>{aol_header}</h5>'.format(aol_header=a)
+            for li in self._aol[a]:
+                r += '<p>{aol_desc_li}</p>'.format(aol_desc_li=li)
+        return r
+
     def imgs(self):
         return self._imgs
 
