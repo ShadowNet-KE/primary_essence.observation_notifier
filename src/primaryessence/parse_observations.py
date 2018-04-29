@@ -5,6 +5,7 @@ from history.notification_history import check_history
 from log.log import log_internal
 from resources.global_resources.logs import logException
 
+
 def find_observations(s, data, child_id):
     #
     soup = BeautifulSoup(data, "html.parser")
@@ -13,7 +14,7 @@ def find_observations(s, data, child_id):
     #
     title = ''
     #
-    data = soup.find("div", {"id": "ljCarousel"})  # Get carousel div that contains all observations
+    data = soup.find("div", {"id": "ljCarousel"})
     div_items = data.findAll("div", {"class": ["item", "item active"]})
     #
     for item in div_items:
@@ -45,9 +46,32 @@ def find_observations(s, data, child_id):
                         #
                         if len(imgs) == 1:
                             src = imgs[0].attrs['src']
-                            r = s.get(src)
-                            if r.ok:
-                                img.append(r.content)
+                            #
+                            if src.endswith('/video-placeholder.png'):
+                                try:
+                                    onclick = imgs[0].attrs['onclick']
+                                    #
+                                    if not check_history(child_id, id):
+                                        #
+                                        url = onclick.replace("GetPresignedVideoToPlay('", "")
+                                        url = url.replace("');", "")
+                                        url = 'https://www.primaryessence.co.uk' + url
+                                        #
+                                        r_vid = s.post(url)
+                                        #
+                                        url_vid = r_vid.content
+                                        url_vid = json.loads(url_vid)['preSignedUrl']
+                                        #
+                                        r = s.get(url_vid)
+                                        if r.ok:
+                                            vid.append(r.content)
+                                except: continue
+                            #
+                            elif not src.endswith('/comments.png'):
+                                r = s.get(src)
+                                if r.ok:
+                                    img.append(r.content)
+                            #
                         else:
                             for i in imgs:
                                 #
@@ -69,35 +93,13 @@ def find_observations(s, data, child_id):
                                     if r.ok:
                                         img.append(r.content)
                         #
-                    else:
-                        v_imgs = div_item_body_media.parent.findAll("img", {"src": "/Content/Images/Master/video-placeholder.png"})
-                        for v_img in v_imgs:
-                            #
-                            try:
-                                onclick = v_img.attrs['onclick']
-                                #
-                                if not check_history(child_id, id):
-                                    #
-                                    url = onclick.replace("GetPresignedVideoToPlay('", "")
-                                    url = url.replace("');", "")
-                                    url = 'https://www.primaryessence.co.uk' + url
-                                    #
-                                    r_vid = s.post(url)
-                                    #
-                                    url_vid = r_vid.content
-                                    url_vid = json.loads(url_vid)['preSignedUrl']
-                                    #
-                                    r = s.get(url_vid)
-                                    if r.ok:
-                                        vid.append(r.content)
-                            except:
-                                pass
-                    #
                     #
                     comment = div_item_body_notes.find("div", {"class": "ess-comment"})
                     if comment is None:
                         comment = ''
                     else:
+                        if len(comment.contents) > 1:
+                            comment = comment.find("p")
                         comment = trimStrings(comment.contents[0])
                     #
                     commentby = div_item_body_notes.find("div", {"class": "ess-comment-by"})
