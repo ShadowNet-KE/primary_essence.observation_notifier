@@ -7,7 +7,7 @@ from notifications.notify_email import send_notifications_all
 from notifications.error_email import send_error_email
 from log.log import log_internal
 from resources.global_resources.logs import logException, logPass
-import config
+from config import config
 
 
 err_count = 0

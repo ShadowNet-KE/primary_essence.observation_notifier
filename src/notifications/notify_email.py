@@ -7,7 +7,7 @@ from datetime import datetime
 from log.log import log_internal
 from resources.global_resources.logs import logException
 
-import config
+from config import config
 from history.notification_history import add_history
 
 
