@@ -4,7 +4,7 @@ MAINTAINER robe16
 # Update
 RUN apt-get update && apt-get install -y python python-pip
 
-WORKDIR /primary_essence/update_checker
+WORKDIR /primary_essence/observation_notifier
 
 # Bundle app source
 COPY src /primary_essence/observation_notifier
