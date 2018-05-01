@@ -1,4 +1,4 @@
-# primaryessence_update-checker
+# primary_essence.update_checker
 
 Application to run and check on regular basis (currently set to hourly) for new observations on the Primary Essence website for child(ren).
 

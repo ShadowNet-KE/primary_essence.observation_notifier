@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y python python-pip
 WORKDIR /primary_essence/update_checker
 
 # Bundle app source
-COPY src /primary_essence/update_checker
+COPY src /primary_essence/observation_notifier
 
 # Copy app dependencies
 COPY requirements.txt requirements.txt

@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-get_cfg_serviceid = 'update_checker'
+get_cfg_serviceid = 'observation_notifier'
 serviceType = 'primary_essence'
 
 logFileNameDateFormat = '%Y-%m-%d'

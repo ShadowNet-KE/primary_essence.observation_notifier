@@ -12,15 +12,15 @@ node {
 
     stage("parameters") {
         // Parameters passed through from the Jenkins Pipeline configuration
-        string(defaultValue: 'https://github.com/robe16/primaryessence_update-checker.git', description: 'GitHub URL for checking out project', name: 'githubUrl')
-        string(defaultValue: 'primary_essence_update_checker', description: 'Name of application for Docker image and container', name: 'appName')
+        string(defaultValue: 'https://github.com/robe16/primary_essence.observation_notifier.git', description: 'GitHub URL for checking out project', name: 'githubUrl')
+        string(defaultValue: 'primary_essence.observation_notifier', description: 'Name of application for Docker image and container', name: 'appName')
         string(defaultValue: '*', description: 'Location of config json file on host device', name: 'fileConfig')
         string(defaultValue: '*', description: 'Location of history json file on host device', name: 'fileHistory')
         string(defaultValue: '*', description: 'Location of log file on host device', name: 'folderLog')
         //
-        docker_volumes = ["-v ${params.fileConfig}:/primary_essence/update_checker/config/config.json",
-                          "-v ${params.fileHistory}:/primary_essence/update_checker/history/history.json",
-                          "-v ${params.folderLog}:/primary_essence/update_checker/log/logfiles/"].join(" ")
+        docker_volumes = ["-v ${params.fileConfig}:/primary_essence/observation_notifier/config/config.json",
+                          "-v ${params.fileHistory}:/primary_essence/observation_notifier/history/history.json",
+                          "-v ${params.folderLog}:/primary_essence/observation_notifier/log/logfiles/"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
