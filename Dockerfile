@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:latest
+FROM balenalib/armv7hf-debian:bookworm-run
 MAINTAINER robe16
 
 # Update
