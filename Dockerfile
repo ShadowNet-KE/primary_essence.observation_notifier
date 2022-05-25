@@ -13,7 +13,7 @@ COPY src /primary_essence/observation_notifier
 COPY requirements.txt requirements.txt
 
 # Install app dependencies
-RUN python -m pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Run application
 CMD python run.py
