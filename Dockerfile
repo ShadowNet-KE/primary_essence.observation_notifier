@@ -2,7 +2,7 @@ FROM balenalib/armv7hf-debian:bookworm-run
 MAINTAINER robe16
 
 # Update
-RUN apt-get update && apt-get install -y python python-pip
+RUN apt-get update && apt-get install -y python3 python3-pip
 
 WORKDIR /primary_essence/observation_notifier
 
@@ -13,7 +13,7 @@ COPY src /primary_essence/observation_notifier
 COPY requirements.txt requirements.txt
 
 # Install app dependencies
-RUN pip install -r requirements.txt
+RUN python -m pip install -r requirements.txt
 
 # Run application
 CMD python run.py
